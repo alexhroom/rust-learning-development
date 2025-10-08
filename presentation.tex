@@ -1,0 +1,91 @@
+\documentclass[14pt]{beamer}
+\useoutertheme[subsection=false]{miniframes}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[style=authoryear, sorting=none, uniquename=false]{biblatex}
+\addbibresource{bibliography.bib}
+
+\graphicspath{{./images/}}
+
+\title{Using Rust in RSE}
+\author{Alex H. Room}
+\date{2025/10/29}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Introduction}
+  \begin{itemize}
+    \item Experiences using Rust for pySpinW
+    \item Binding Python to Rust
+    \item Linear algebra
+    \item Parallelism
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{How are we using it for pySpinW?}
+  \begin{itemize}
+    \item Core spin-wave calculation
+    \item Mostly small/medium matrix linear algebra
+    \item In parallel over $\mathbf{Q}$ points
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The headlines}
+  \begin{itemize}
+    \item 50x-100x speedup over NumPy
+    \item Writing Rust code is very quick (once you're over the learning curve)
+    \item Paralellism is so, so easy
+    \item Linear algebra is a underdeveloped but great tools exist
+    \item Python bindings are a little harder...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Benchmarks}
+Benchmarks are over 5000 Q-points and varying examples:
+\begin{tabular}{lrr}
+  \hline
+  Language & & & & & \\
+  \hline
+  Python (\texttt{NumPy}) & 2.37 & 2.02 & 4.76 & 4.11 & 312.74 \\
+  Rust (\texttt{faer}) & 0.07 & 0.08 & 0.17 & 0.20 & 3.59 \\
+  \hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}{The learning curve}
+  \begin{itemize}
+    \item Rust is weird if you're used to Python/C/C++
+    \item Some of that is new weirdness, some is just 40 years of programming language evolution
+    \item You're forced to get good straight away, sloppy code isn't allowed
+    \item Code either runs safely or doesn't compile!
+    \item \textit{Programming Rust} by Blandy, Orendorff and Tindall(!!!!!)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Parallelism with \texttt{rayon}}}
+  \begin{minted}{rust}
+    fn my_function(inputs: Vec<f64>) -> Vec<f64> {
+      inputs.into_iter().map(do_something).collect(); 
+    }
+
+    fn do_something(input: f64) -> f64 {
+      // Some expensive calculation
+    }
+  \end{minted}
+\end{frame}
+
+\begin{frame}{Parallelism with \texttt{rayon}}}
+  \begin{minted}{rust}
+    use rayon::prelude::*;
+
+    fn my_function(inputs: Vec<f64>) -> Vec<f64> {
+      inputs.into_par_iter().map(do_something).collect(); 
+      // it's parallel now
+    }
+  \end{minted}
+\end{frame}
+
+
