@@ -1,11 +1,8 @@
-\documentclass[14pt]{beamer}
+\documentclass{beamer}
 \useoutertheme[subsection=false]{miniframes}
 \setbeamertemplate{navigation symbols}{}
 
-\usepackage[style=authoryear, sorting=none, uniquename=false]{biblatex}
-\addbibresource{bibliography.bib}
-
-\graphicspath{{./images/}}
+\usepackage{minted}
 
 \title{Using Rust in RSE}
 \author{Alex H. Room}
@@ -45,13 +42,12 @@
 
 \begin{frame}{Benchmarks}
 Benchmarks are over 5000 Q-points and varying examples:
-\begin{tabular}{lrr}
-  \hline
+
+\begin{tabular}{l l l l l l}
   Language & & & & & \\
-  \hline
+  \hline\hline
   Python (\texttt{NumPy}) & 2.37 & 2.02 & 4.76 & 4.11 & 312.74 \\
   Rust (\texttt{faer}) & 0.07 & 0.08 & 0.17 & 0.20 & 3.59 \\
-  \hline
 \end{tabular}
 \end{frame}
 
@@ -65,8 +61,10 @@ Benchmarks are over 5000 Q-points and varying examples:
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Parallelism with \texttt{rayon}}}
+\begin{frame}[fragile]{Parallelism with \texttt{rayon}}
   \begin{minted}{rust}
+
+
     fn my_function(inputs: Vec<f64>) -> Vec<f64> {
       inputs.into_iter().map(do_something).collect(); 
     }
@@ -77,15 +75,18 @@ Benchmarks are over 5000 Q-points and varying examples:
   \end{minted}
 \end{frame}
 
-\begin{frame}{Parallelism with \texttt{rayon}}}
+\begin{frame}[fragile]{Parallelism with \texttt{rayon}}
   \begin{minted}{rust}
     use rayon::prelude::*;
 
     fn my_function(inputs: Vec<f64>) -> Vec<f64> {
       inputs.into_par_iter().map(do_something).collect(); 
-      // it's parallel now
+    }
+
+    fn do_something(input: f64) -> f64 {
+      // Some expensive calculation
     }
   \end{minted}
 \end{frame}
 
-
+\end{document}
