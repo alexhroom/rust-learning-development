@@ -41,14 +41,12 @@
 \end{frame}
 
 \begin{frame}{Benchmarks}
-Benchmarks are over 5000 Q-points and varying examples:
-
-\begin{tabular}{l l l l l l}
-  Language & & & & & \\
-  \hline\hline
-  Python (\texttt{NumPy}) & 2.37 & 2.02 & 4.76 & 4.11 & 312.74 \\
-  Rust (\texttt{faer}) & 0.07 & 0.08 & 0.17 & 0.20 & 3.59 \\
-\end{tabular}
+  \begin{tabular}{l l l l l l}
+    Language & & & & & \\
+    \hline\hline
+    Python (\texttt{NumPy}) & 2.37 & 2.02 & 4.76 & 4.11 & 312.74 \\
+    Rust (\texttt{faer}) & 0.07 & 0.08 & 0.17 & 0.20 & 3.59 \\
+  \end{tabular}
 \end{frame}
 
 \begin{frame}{The learning curve}
@@ -57,7 +55,7 @@ Benchmarks are over 5000 Q-points and varying examples:
     \item Some of that is new weirdness, some is just 40 years of programming language evolution
     \item You're forced to get good straight away, sloppy code isn't allowed
     \item Code either runs safely or doesn't compile!
-    \item \textit{Programming Rust} by Blandy, Orendorff and Tindall(!!!!!)
+    \item \textit{Programming Rust} by Blandy, Orendorff and Tindall(!!)
   \end{itemize}
 \end{frame}
 
@@ -87,6 +85,35 @@ Benchmarks are over 5000 Q-points and varying examples:
       // Some expensive calculation
     }
   \end{minted}
+\end{frame}
+
+\begin{frame}{Linear algebra in Rust}
+  \begin{itemize}
+    \item Lots of options, none as mature as \texttt{NumPy}/\texttt{SciPy}
+    \item \texttt{nalgebra} - 1D/2D arrays, decently fast, some issues... 
+    \item \texttt{ndarray} - similar to NumPy, general arrays, slow!
+    \item \texttt{faer} - focused on medium/large matrix algebra, very fast, easiest to use
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python bindings with \texttt{pyo3}}
+  \begin{itemize}
+    \item \texttt{pyo3} is the main way to bind Python to Rust
+    \item Best used with \texttt{maturin} to build packages!
+    \item Most basic Python types supported out of the box
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Caveat emptor}
+  \begin{itemize}
+    \item Memory management between Python and Rust is tricky
+    \item \textt{pyo3} forbids some Rust functionality to manage this
+    \item Numpy arrays need special handling which can be unintuitive
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python bindings with \texttt{pyo3}}
+  Let's get hands on!
 \end{frame}
 
 \end{document}
