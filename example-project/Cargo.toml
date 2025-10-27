@@ -1,0 +1,15 @@
+[package]
+name = "example-project"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "example_project"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.26.0"
+numpy = "0.26.0"
+faer = "0.23.1"
+faer-ext = {version = "0.7.1", features = ["numpy"]}
